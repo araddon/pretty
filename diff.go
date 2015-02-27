@@ -84,7 +84,11 @@ func (w diffWriter) diff(av, bv reflect.Value) {
 		}
 	case reflect.Struct:
 		for i := 0; i < av.NumField(); i++ {
-			w.relabel(at.Field(i).Name).diff(av.Field(i), bv.Field(i))
+			r := at.Field(i).Name[0]
+			if r >= 'A' && r <= 'Z' {
+				w.relabel(at.Field(i).Name).diff(av.Field(i), bv.Field(i))
+			}
+
 		}
 	case reflect.Slice:
 		lenA := av.Len()
